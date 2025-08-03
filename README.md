@@ -13,7 +13,7 @@
 
 ## Getting Started
 ### Description
-A cross platform RAT written in pure Python. The RAT accept commands alongside arguments to either perform as the server who accepts connections or to perform as the client/target who establish connections to the server. The **generate** command uses the module **pyinstaller** to compile the actual payload code. So, in order to generate payload file for your respective platform, you need to be on that platform while generating the file. Moreover, you can directly get the source file as well. 
+winsRAT is written entirely in Python, developed from SillyRAT. winsRAT is a RAT specifically for Windows operating systems and has additional features. Server.py can generate two types of files: .exe files and source files.
 
 ### Features
 <ul>
