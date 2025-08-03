@@ -47,7 +47,7 @@ $ python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Down
 $ python3 server.py generate -a 192.168.1.100 -p 9001 -o  "C:\Users\1com3456\Downloads\winsrat"
 ```
 
-<h6 align="center"><img src="https://user-images.githubusercontent.com/29171692/89173322-b74dc680-d5a1-11ea-8b3b-e5aa83cfbda1.png"></h6>
+<h6 align="center"><img src=""></h6>
 
 Replace your IP Address and Port on above commands. 
 
@@ -63,7 +63,7 @@ All the connections will be listed under **sessions** command:
 $ sessions
 ```
 
-<h6 align="center"><img src="https://user-images.githubusercontent.com/29171692/89171634-152cdf00-d59f-11ea-83a6-0344f370113a.png"></h6>
+<h6 align="center"><img src=""></h6>
 
 You can connect to you target session with **connect** command and launch one of available commands: 
 ```
