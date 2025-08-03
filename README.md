@@ -73,7 +73,7 @@ $ keylogger dump
 $ screenshot
 ```
 
-<h6 align="center"><img src="https://user-images.githubusercontent.com/29171692/89172191-d9464980-d59f-11ea-988c-9986b52642e7.png"></h6>
+<h6 align="center"><img src=""></h6>
 
 ### Help
 Get a list of available commands: 
