@@ -5,7 +5,7 @@
 <p align="center">
     <a href="https://www.python.org/" target="_blank"><img src="https://img.shields.io/badge/Python-3-yellow.svg?logo=python" alt="Python: 3" /></a>
     <a href="https://github.com/ThemeHackers/winsRAT/releases" target="_blank"><img src="https://img.shields.io/badge/version-v2.1-blue.svg?logo=moo" alt="Release: v3.1" /></a>
-    <a href="https://opensource.org/license/gpl-3-0" target="_blank"><img src="https://img.shields.io/badge/license-GPL-3.0-green.svg" alt="lisence" /></a>
+    <a href="https://opensource.org/license/gpl-3-0" target="_blank"><img src="https://img.shields.io/badge/license-GPL-green.svg" alt="lisence" /></a>
 </p>
 <h4 align="center"> Windows RAT</h4>
 
