@@ -23,7 +23,7 @@ winsRAT is written entirely in Python, developed from SillyRAT. winsRAT is a RAT
     <li>Connection Loop (Will continue on connecting to server)</li>
     <li>Currently, it uses BASE64 encoding. </li>
     <li>Pure Python</li>
-    <li>Cross Platform. (Tested on Linux. Errors are accepted)</li>
+    <li></li>
     <li>Source File included for testing</li>
     <li>Python 3</li>
 </ul>
