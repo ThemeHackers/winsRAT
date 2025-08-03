@@ -15,26 +15,7 @@
 ### Description
 winsRAT is written entirely in Python, developed from SillyRAT. winsRAT is a RAT specifically for Windows operating systems and has additional features. Server.py can generate two types of files: .exe files and source files.
 
-### Features
-<ul>
-    <li>Built-in Shell for command execution</li>
-    <li>Dumping System Information including drives and rams</li>
-    <li>Screenshot module. Captures screenshot of client screen.</li>
-    <li>Connection Loop (Will continue on connecting to server)</li>
-    <li>Currently, it uses BASE64 encoding. </li>
-    <li>Pure Python</li>
-    <li></li>
-    <li>Source File included for testing</li>
-    <li>Python 3</li>
-</ul>
 
-### To be expected in future
-<ul>
-    <li>Stealth Execution</li>
-    <li>Encryption</li>
-    <li>Storing Sessions from last attempt</li>
-    <li>Pushing Notifications when a client connects</li>
-</ul>
 
 ### Installation
 The tool is tested on **Parrot OS** with **Python 3.8**. 
