@@ -1,0 +1,12 @@
+tabulate
+pyinstaller
+pynput
+psutil
+pillow
+python-xlib
+sounddevice
+soundfile
+pyperclip
+opencv-python
+pyautogui
+mss
