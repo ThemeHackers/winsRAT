@@ -1,6 +1,6 @@
 <h1 align="center"> 
     <img src="https://user-images.githubusercontent.com/29171692/89164677-00e3e480-d595-11ea-9cf1-f27ab1faf432.png" alt="SillyRAT" /> <br>    
-    winsRAT Under continuous development
+    winsRAT Under continuous development (Beta winsRAT)
 </h1>
 <p align="center">
     <a href="https://www.python.org/" target="_blank"><img src="https://img.shields.io/badge/Python-3-yellow.svg?logo=python" alt="Python: 3" /></a>
