@@ -4,8 +4,8 @@
 </h1>
 <p align="center">
     <a href="https://www.python.org/" target="_blank"><img src="https://img.shields.io/badge/Python-3-yellow.svg?logo=python" alt="Python: 3" /></a>
-    <a href="https://github.com/hash3liZer/SillyRAT/releases" target="_blank"><img src="https://img.shields.io/badge/version-v1.0-blue.svg?logo=moo" alt="Release: v3.1" /></a>
-    <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="lisence" /></a>
+    <a href="https://github.com/ThemeHackers/winsRAT/releases" target="_blank"><img src="https://img.shields.io/badge/version-v2.1-blue.svg?logo=moo" alt="Release: v3.1" /></a>
+    <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/license-GNU-green.svg" alt="lisence" /></a>
 </p>
 <h4 align="center"> Windows RAT</h4>
 
