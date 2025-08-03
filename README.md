@@ -18,6 +18,13 @@ winsRAT is written entirely in Python, developed from SillyRAT. winsRAT is a RAT
 ### Features
 This image shows the features of the tool.
 <h6 align="center"><img src="/img/features.png"></h6>
+And others, stay tuned.
+
+### High-level features
+
+- Avoid AV
+- The payload is base64 encoded.
+- And others, stay tuned.
 
 ### Installation
 The tool is tested on **Windows** with **Python 3.13.4**. 
