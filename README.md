@@ -33,14 +33,14 @@ You can get the payload file in two ways:
     <li>Source File</li>
     <li>Compiled File</li>
 </ul>
-The source file is to remain same on all platforms. So, you can generate it on one platform and use it on the other. Getting the source file: 
+
 
 ```
 $ python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}" -s -per
 $ python3 server.py generate -a 192.168.1.100 -p 9001 -o "C:\Users\1com3456\Downloads\winsrat" -s -per
 ```
 
-The compiled version has to generated on the respective platform. For example, you can't generate an .exe file on Linux. You specifically have to be on Windows. The tool is still under testing. So, all kinds of errors are accepted. Make sure to open an issue though. Generating the Compiled Version for Linux:
+
 
 ```
 $ python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}"
