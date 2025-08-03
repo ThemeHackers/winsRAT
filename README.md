@@ -102,3 +102,5 @@ Discord: TheFlash2k#0407
 ### Support the improvement 
 Instagram: <a href="https://www.instagram.com/_tthemzdl5678/">_tthemzdl5678</a><br>
 Github: <a href="https://github.com/ThemeHackers/">ThemeHackers</a><br>
+### Disclaimer
+This tool is only for use by penetration testers or security testers. The author is not responsible for any illegal actions in your country.
