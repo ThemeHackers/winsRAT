@@ -41,7 +41,7 @@ These are the commands available for usage:
     generate    Generate the Payload file for target platform
 
 You can further get help on available commands by supplying
-'--help' argument. For example: 'python3 sillyrat generate --help'
+'--help' argument. For example: 'python3 server.py generate --help'
 will print help manual for generate commmand
 """
 
@@ -152,7 +152,7 @@ class PULL:
             ('screenshot', 'Take Screenshot on Target Machine and Save on Local'),
             ('screenshare' , 'Take Screenshot on Target Machine and Share in Real Time'),
             ('webcam', 'Capture Webcam Image and Save on Local'),
-            ('exit', 'Exit from SillyRAT!')
+            ('exit', 'Exit from winsRAT!')
             
             
         ]
@@ -168,7 +168,7 @@ class PULL:
             ('connect', 'Connect to a Specific Client'),
             ('disconnect', 'Disconnect from Current Client'),
             ('clear', 'Clear Screen'),
-            ('exit', 'Exit from SillyRAT!')
+            ('exit', 'Exit from winsRAT!')
         ]
         sys.stdout.write("\n")
         print(tabulate.tabulate(lister, headers=headers))
