@@ -1,3 +1,4 @@
+# mods/webcam.py
 import time
 import cv2
 from PIL import Image
@@ -46,3 +47,4 @@ class Webcam:
         except Exception as e:
             print(f"[-] Webcam error: {e}")
             sys.exit(0)  
+
