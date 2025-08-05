@@ -2,6 +2,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import sys
 import os
+import pickle
 import socket
 import time
 import base64
@@ -26,3 +27,4 @@ except ImportError:
     HAVE_X = False
 except Exception:
     HAVE_X = False
+    
