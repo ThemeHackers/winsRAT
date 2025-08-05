@@ -152,9 +152,9 @@ class PULL:
             ('keylogger', 'KeyLogger Module'),
             ('sysinfo', 'Dump System, Processor, CPU and Network Information'),
             ('screenshot', 'Take Screenshot on Target Machine and Save on Local'),
-            ('screenshare' , 'Take Screenshot on Target Machine and Share in Real Time'),
+            # ('screenshare' , 'Take Screenshot on Target Machine and Share in Real Time'),
             ('webcam', 'Capture Webcam Image and Save on Local'),
-            ('antivm' , 'Check if the target is a VM to change the behavior of winsRAT.'),
+            # ('antivm' , 'Check if the target is a VM to change the behavior of winsRAT.'),
             ('exit', 'Exit from winsRAT!')
             
             
@@ -986,4 +986,5 @@ if __name__ == "__main__":
         pull.exit("Exiting ...")
     except Exception as e:
         pull.error("An error occurred: %s" % str(e))
+
         sys.exit(1)
