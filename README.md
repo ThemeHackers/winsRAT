@@ -7,7 +7,8 @@
     <a href="https://github.com/ThemeHackers/winsRAT/releases" target="_blank"><img src="https://img.shields.io/badge/version-v2.1-blue.svg?logo=moo" alt="Release: v3.1" /></a>
     <a href="https://opensource.org/license/gpl-3-0" target="_blank"><img src="https://img.shields.io/badge/license-GPL-green.svg" alt="lisence" /></a>
 </p>
-<h4 align="center"> Windows RAT</h4>
+<h4 align="center">Windows RAT</h4>
+<h4 align="center">If you find any issues with the code, you can open an Issue</h4>
 
 
 
