@@ -11,7 +11,7 @@
 <h4 align="center">If you find any issues with the code, you can open an Issue</h4>
 <h4 align="center">We are currently experiencing issues with the webcam module, screen sharing module, and anti-VM module. We are working on fixing these issues, and the Webcam function is now complete. We will implement the fix as soon as possible and continue developing other modules</h4>
 
-## Issues
+## Problem solving in progress
 - Fixing module errors
 - Anti-VM Modules
 - Screenshare Modules
