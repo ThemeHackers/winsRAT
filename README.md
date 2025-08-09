@@ -73,8 +73,8 @@ python3 server.py generate -a 192.168.1.100 -p 9001 -o "C:\Users\1com3456\Downlo
 Compiled file
 
 ```bash
-python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}"
-python3 server.py generate -a 192.168.1.100 -p 9001 -o  "C:\Users\1com3456\Downloads\winsrat"
+python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}" -per
+python3 server.py generate -a 192.168.1.100 -p 9001 -o  "C:\Users\1com3456\Downloads\winsrat" -per
 ```
 
 Replace your IP Address and Port on above commands. 
