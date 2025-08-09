@@ -44,6 +44,7 @@ def help_c_current(self):
 - The payload is base64 encoded.
 - The webcam module is developed to capture images of multiple devices on the connected target machine. For example, if the target machine has 5 webcams, this module will capture images of all 5 devices immediately when using the webcam command on the server.
 - Reconnecting to increase retention
+- RAT behavior changes when encountering a VM target (under development)
 - And others, stay tuned.
 
 ### Installation
