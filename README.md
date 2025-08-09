@@ -1,5 +1,5 @@
 <h1 align="center"> 
-    <img src="https://user-images.githubusercontent.com/29171692/89164677-00e3e480-d595-11ea-9cf1-f27ab1faf432.png" alt="SillyRAT" /> <br>    
+    <img src="https://user-images.githubusercontent.com/29171692/89164677-00e3e480-d595-11ea-9cf1-f27ab1faf432.png" alt="winsRAT" /> <br>    
     winsRAT Under continuous development (Beta winsRAT)
 </h1>
 <p align="center">
