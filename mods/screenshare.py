@@ -1,55 +1,37 @@
-#mods/screenshare.py
+# mods/screenshare.py
 import sys
 import threading
 import time
 import socket
+from io import BytesIO
 from http.server import BaseHTTPRequestHandler, HTTPServer
-
-ver = sys.version_info.major
-if ver == 2:
-    import StringIO as io
-elif ver == 3:
-    import io
-
-if sys.platform in ["win32", "darwin"]:
-    from PIL import ImageGrab as ig
-else:
-    import pyscreenshot as ig
-    bkend = "pygdk3"
-
+from PIL import ImageGrab as ig
 
 class ScreenShareServer:
-    def __init__(self, port=8000, fps=60):
+    def __init__(self, port=8000, fps=60, on_ready=None):
         self.port = port
         self.fps = fps
-        self.ver = ver
         self.screenbuf = b""
         self.lock = threading.Lock()
         self.running = True
+        self.on_ready = on_ready
+        self.screenfile = BytesIO()
 
-        if self.ver == 2:
-            self.screenfile = io.StringIO()
-        else:
-            self.screenfile = io.BytesIO()
-
+        
         threading.Thread(target=self.capture_frames, daemon=True).start()
-
-    def __del__(self):
-        self.screenfile.close()
+        threading.Thread(target=self.start_server, daemon=True).start()
 
     def capture_frames(self):
         while self.running:
-            if sys.platform in ["win32", "darwin"]:
+            try:
                 im = ig.grab()
-            else:
-                im = ig.grab(childprocess=False, backend=bkend)
-
-            self.screenfile.seek(0)
-            self.screenfile.truncate(0)
-            im_converted = im.convert("RGB")
-            im_converted.save(self.screenfile, format="jpeg", quality=75, progressive=True)
-            with self.lock:
-                self.screenbuf = self.screenfile.getvalue()
+                self.screenfile.seek(0)
+                self.screenfile.truncate(0)
+                im.convert("RGB").save(self.screenfile, format="JPEG", quality=75, progressive=True)
+                with self.lock:
+                    self.screenbuf = self.screenfile.getvalue()
+            except Exception as e:
+                print(f"[Error] capture_frames: {e}", file=sys.stderr)
             time.sleep(1.0 / self.fps)
 
     def get_frame_bytes(self):
@@ -59,6 +41,7 @@ class ScreenShareServer:
     def get_local_ip(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         try:
+
             s.connect(('10.255.255.255', 1))
             IP = s.getsockname()[0]
         except Exception:
@@ -68,41 +51,52 @@ class ScreenShareServer:
         return IP
 
     def start_server(self):
-        class Handler(BaseHTTPRequestHandler):
-            def do_GET(handler_self):
-                if handler_self.path != '/screenshare':
-                    handler_self.send_error(404)
+        ip = self.get_local_ip()
+        url = f"http://{ip}:{self.port}/screenshare"
+
+        if self.on_ready:
+            self.on_ready(url)
+        else:
+            pass
+
+
+        class ScreenShareHandler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                if self.path != '/screenshare':
+                    self.send_error(404)
                     return
 
-                handler_self.send_response(200)
-                handler_self.send_header('Content-type', 'multipart/x-mixed-replace; boundary=frame')
-                handler_self.end_headers()
+                self.send_response(200)
+                self.send_header('Content-type', 'multipart/x-mixed-replace; boundary=frame')
+                self.end_headers()
 
                 try:
                     while True:
-                        frame = self.get_frame_bytes()
-                        handler_self.wfile.write(b"--frame\r\n")
-                        handler_self.send_header('Content-Type', 'image/jpeg')
-                        handler_self.send_header('Content-Length', str(len(frame)))
-                        handler_self.end_headers()
-                        handler_self.wfile.write(frame)
-                        handler_self.wfile.write(b'\r\n')
-                        time.sleep(1.0 / self.fps)
-                except Exception as e:
-                    print("Client disconnected:", e)
+                        frame = self.server.screen_server.get_frame_bytes()
+                        self.wfile.write(b"--frame\r\n")
+                        self.send_header('Content-Type', 'image/jpeg')
+                        self.send_header('Content-Length', str(len(frame)))
+                        self.end_headers()
+                        self.wfile.write(frame)
+                        self.wfile.write(b'\r\n')
+                        time.sleep(1.0 / self.server.screen_server.fps)
+                except (BrokenPipeError, ConnectionResetError):
+                    pass
+                except Exception:
+                    pass
 
-        ip = self.get_local_ip()
-        print(f"Starting screen share server at http://{ip}:{self.port}/screenshare")
-        print("Open the URL in your browser to view the live screen stream.\nPress Ctrl+C to stop.")
+            def log_message(self, format, *args):
+              
+                return
 
-        server = HTTPServer(('', self.port), Handler)
+
+        server = HTTPServer(('', self.port), ScreenShareHandler)
+        server.screen_server = self
+
         try:
             server.serve_forever()
         except KeyboardInterrupt:
-            print("\nServer stopped.")
+            pass
         finally:
-            server.server_close()
             self.running = False
-
-
-
+            server.server_close()

