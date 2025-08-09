@@ -10,3 +10,6 @@ pyperclip
 opencv-python
 pyautogui
 mss
+pyarmor
+pyarmor-webui
+nuitka
