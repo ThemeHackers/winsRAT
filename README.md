@@ -8,13 +8,6 @@
     <a href="https://opensource.org/license/gpl-3-0" target="_blank"><img src="https://img.shields.io/badge/license-GPL-green.svg" alt="lisence" /></a>
 </p>
 <h4 align="center">Windows RAT</h4>
-<h4 align="center">If you find any issues with the code, you can open an Issue</h4>
-<h4 align="center">We are currently experiencing issues with the webcam module, screen sharing module, and anti-VM module. We are working on fixing these issues, and the Webcam function is now complete. We will implement the fix as soon as possible and continue developing other modules</h4>
-
-## Problem solving in progress
-- Fixing module errors
-- Anti-VM Modules
-- Screenshare Modules
 
 ## Getting Started
 ### Description
