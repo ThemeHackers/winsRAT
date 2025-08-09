@@ -14,7 +14,7 @@
 winsRAT is written entirely in Python, developed from SillyRAT. winsRAT is a RAT specifically for Windows operating systems and has additional features. Server.py can generate two types of files: .exe files and source files.
 
 ### Features
-This image shows the features of the tool.
+This code shows the features of the tool.
 ```bash
 def help_c_current(self):
         headers = (pull.BOLD + 'Command' + pull.END, pull.BOLD + 'Description' + pull.END)
