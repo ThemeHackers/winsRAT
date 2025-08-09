@@ -15,8 +15,28 @@ winsRAT is written entirely in Python, developed from SillyRAT. winsRAT is a RAT
 
 ### Features
 This image shows the features of the tool.
-
-And others, stay tuned.
+```bash
+def help_c_current(self):
+        headers = (pull.BOLD + 'Command' + pull.END, pull.BOLD + 'Description' + pull.END)
+        lister  = [
+            ('help', 'Shows manual for commands'),
+            ('sessions', 'Show all connected clients to the server'),
+            ('connect', 'Connect to a Specific Client'),
+            ('disconnect', 'Disconnect from Current Client'),
+            ('clear', 'Clear Screen'),
+            ('shell'  , 'Launch a New Terminal/Shell.'),
+            ('keylogger', 'KeyLogger Module'),
+            ('sysinfo', 'Dump System, Processor, CPU and Network Information'),
+            ('screenshot', 'Take Screenshot on Target Machine and Save on Local'),
+            ('screenshare' , 'Take Screenshot on Target Machine and Share in Real Time'),
+            ('webcam', 'Capture Webcam Image and Save on Local'),
+            ('antivm' , 'Check if the target is a VM to change the behavior of winsRAT.'),
+            ('exit', 'Exit from winsRAT!')
+            
+            
+        ]
+```
+- And others, stay tuned.
 
 ### High-level features
 
