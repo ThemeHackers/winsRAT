@@ -45,6 +45,7 @@ def help_c_current(self):
 - The webcam module is developed to capture images of multiple devices on the connected target machine. For example, if the target machine has 5 webcams, this module will capture images of all 5 devices immediately when using the webcam command on the server.
 - Reconnecting to increase retention
 - RAT behavior changes when encountering a VM target (under development)
+- You can make the compiled exe file work with the CVE-2025-8088 vulnerability. In terms of winrar vulnerability, when you use it with this vulnerability, it elevates the tool to a full Malware Delivery Chain.
 - And others, stay tuned.
 
 ### Installation
